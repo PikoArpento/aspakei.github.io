@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mappa di Aspakei</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #432818;
+            color: #FFE6A7;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .map-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .map {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+
+        .map-icon {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: 180px;
+            background-color: #FFE6A7;
+            color: #432818;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .map-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .transport-container {
+            background: #BB9457;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .transport-form label, .transport-form select, .transport-form input, .transport-form button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .transport-form button {
+            background: #99582A;
+            color: #FFE6A7;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+            .transport-form button:hover {
+                background: #FFE6A7;
+                color: #432818;
+            }
+
+        .route-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+            .route-table th, .route-table td {
+                padding: 12px;
+                text-align: center;
+                border-bottom: 2px solid #432818;
+            }
+
+            .route-table th {
+                background-color: #99582A;
+                color: #FFE6A7;
+                font-size: 18px;
+            }
+
+            .route-table tr:nth-child(even) {
+                background-color: #BB9457;
+            }
+
+            .route-table tr:nth-child(odd) {
+                background-color: #E7C083;
+            }
+
+            .route-table tr:hover {
+                background-color: #FFE6A7;
+                color: #432818;
+                cursor: pointer;
+                transform: scale(1.02);
+                transition: all 0.2s ease-in-out;
+            }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+            .nav-buttons a {
+                padding: 10px 20px;
+                background: #BB9457;
+                color: #432818;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+            }
+
+                .nav-buttons a:hover {
+                    background: #FFE6A7;
+                }
+    </style>
+</head>
+<body>
+    <h1>Visita Aspakei</h1>
+
+    <div class="map-container">
+        <img src="map.jpg" alt="Map of the Empire" class="map">
+
+        <div class="map-icon" style="top: 25%; left: 25%;">
+            <img src="icon.png" alt="Kadekei">
+            <div class="tooltip">
+                <strong>Kadekei</strong><br>
+                <a href="capital.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 35%; left: 30%;">
+            <img src="icon.png" alt="Lucozhkei">
+            <div class="tooltip">
+                <strong>Lucozhkei</strong><br>
+                <a href="tradehub.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 34%; left: 29%;">
+            <img src="icon.png" alt="Isozhkei">
+            <div class="tooltip">
+                <strong>Isozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 38%; left: 32%;">
+            <img src="icon.png" alt="Barbarbozhkei">
+            <div class="tooltip">
+                <strong>Barbarbozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 8%; left: 36%;">
+            <img src="icon.png" alt="Borvozhkei">
+            <div class="tooltip">
+                <strong>Borvozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 23%; left: 63%;">
+            <img src="icon.png" alt="Spursozhkei">
+            <div class="tooltip">
+                <strong>Spurozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 58%; left: 75%;">
+            <img src="icon.png" alt="Sandozhkei">
+            <div class="tooltip">
+                <strong>Sandozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 28%; left: 32%;">
+            <img src="icon.png" alt="Dostozhkei">
+            <div class="tooltip">
+                <strong>Dostozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 30%; left: 25%;">
+            <img src="icon.png" alt="Olgayozhkei">
+            <div class="tooltip">
+                <strong>Olgayozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 28%; left: 24%;">
+            <img src="icon_NRPL.png" alt="Hyperbase">
+            <div class="tooltip">
+                <strong>NRPL of the Hyperbase</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 28%; left: 28%;">
+            <img src="icon_NRPL.png" alt="Afterbridge">
+            <div class="tooltip">
+                <strong>NRPL of the Afterbridge</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 54%; left: 60%;">
+            <img src="icon_NRPL.png" alt="Xayofkei">
+            <div class="tooltip">
+                <strong>NRPL of Xayofkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 56%; left: 38%;">
+            <img src="icon.png" alt="Rosozhkei">
+            <div class="tooltip">
+                <strong>Rosozhkei</strong><br>
+                <a href="portcity.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 17%; left: 83%;">
+            <img src="icon.png" alt="Fluvyozhkei">
+            <div class="tooltip">
+                <strong>Fluvyozhkei</strong><br>
+                <a href="mountainvillage.html">Go to page</a>
+            </div>
+        </div>
+
+        <div class="map-icon" style="top: 17%; left: 83%;">
+            <img src="icon.png" alt="Mountain Village">
+            <div class="tooltip">
+                <strong>Fluvyozhkei</strong><br>
+                <a href="mountainvillage.html">Go to page</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="station-info" class="station-info-box" style="display: none;"></div>
+
+    <div class="transport-container">
+        <h2>Trova la strada migliore</h2>
+        <form class="transport-form">
+            <label for="from">Da:</label>
+            <select id="from">
+            </select>
+
+            <label for="to">A:</label>
+            <select id="to">
+            </select>
+
+            <label for="transportType">Tipo di trasporto:</label>
+            <select id="transportType">
+                <option value="">Tutti</option>
+                <option value="train">Treno</option>
+                <option value="bus">Autobus</option>
+                <option value="ferry">Traghetto</option>
+            </select>
+
+
+            <label for="time">Scegli orario di partenza:</label>
+            <input type="time" id="time">
+
+            <button type="button" onclick="findBestRoute()">Trova tratta</button>
+        </form>
+        <p id="route-info"></p>
+        <table class="route-table" id="route-table" style="display: none;">
+
+            <tbody id="route-results"></tbody>
+        </table>
+    </div>
+
+    <script>
+
+        document.querySelectorAll('.map-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const cityName = this.querySelector('img').alt.trim();
+                sessionStorage.setItem("selectedCity", cityName);
+                window.open("meteo.html", "_blank", "width=400,height=500");
+            });
+        });
+
+        const cities = {
+            "Kadekei": { x: 25, y: 25 },
+            "Lucozhkei": { x: 35, y: 30 },
+            "Isozhkei": { x: 34, y: 29 },
+            "Barbarbozhkei": { x: 38, y: 32 },
+            "Borvozhkei": { x: 8, y: 36 },
+            "Spurozhkei": { x: 23, y: 63 },
+            "Sandozhkei": { x: 58, y: 65 },
+            "Dostozhkei": { x: 28, y: 32 },
+            "Olgayozhkei": { x: 30, y: 25 },
+            "Hyperbase": { x: 28, y: 24 },
+            "Afterbridge": { x: 28, y: 28 },
+            "Xayofkei": { x: 54, y: 60 },
+            "Rosozhkei": { x: 56, y: 38 },
+            "Fluvyozhkei": { x: 17, y: 83 }
+        };
+        const transportLines = [
+            { line: "Train X3", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei"], startTime: "08:00" },
+            { line: "Bus 12", type: "bus", stops: ["Kadekei", "Fluvyozhkei", "Sandozhkei"], startTime: "09:30" }
+        ];
+
+
+        function populateCityOptions() {
+            const fromSelect = document.getElementById("from");
+            const toSelect = document.getElementById("to");
+            fromSelect.innerHTML = "";
+            toSelect.innerHTML = "";
+
+            for (const city in cities) {
+                let option1 = document.createElement("option");
+                let option2 = document.createElement("option");
+                option1.value = option2.value = city;
+                option1.innerText = option2.innerText = city.charAt(0).toUpperCase() + city.slice(1);
+                fromSelect.appendChild(option1);
+                toSelect.appendChild(option2);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", populateCityOptions);
+
+        function calculateTravelTime(city1, city2) {
+            const dx = cities[city1].x - cities[city2].x;
+            const dy = cities[city1].y - cities[city2].y;
+            return Math.round(Math.sqrt(dx * dx + dy * dy) * 3); // 3 min per unit distance
+        }
+
+        function generateTimetable(line, reverse = false) {
+            let time = line.startTime.split(":");
+            let hour = parseInt(time[0]), minute = parseInt(time[1]);
+            let schedule = {};
+
+            let stops = reverse ? [...line.stops].reverse() : line.stops;
+
+            for (let i = 0; i < stops.length; i++) {
+                schedule[stops[i]] = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                if (i < stops.length - 1) {
+                    let travelTime = calculateTravelTime(stops[i], stops[i + 1]);
+                    minute += travelTime;
+                    hour += Math.floor(minute / 60);
+                    minute %= 60;
+                }
+            }
+            return schedule;
+        }
+
+        function findBestRoute() {
+            const from = document.getElementById("from").value;
+            const to = document.getElementById("to").value;
+            const selectedTime = document.getElementById("time").value;
+
+            if (from === to) {
+                document.getElementById("route-info").innerText = "Sei già a destinazione.";
+                document.getElementById("route-table").style.display = "none";
+                return;
+            }
+
+            let visited = new Set();
+            let queue = [{ location: from, route: [], time: selectedTime }];
+            let transportType = document.getElementById("transportType").value;
+
+            while (queue.length > 0) {
+                let current = queue.shift();
+                let currentLocation = current.location;
+                let currentRoute = current.route;
+                let currentTime = current.time;
+
+                if (currentLocation === to) {
+                    displayRoute(currentRoute);
+                    return;
+                }
+
+                if (visited.has(currentLocation)) continue;
+                visited.add(currentLocation);
+
+                for (const line of transportLines) {
+                    if (line.stops.includes(currentLocation)) {
+                        let forwardIndex = line.stops.indexOf(currentLocation);
+                        let reverseIndex = line.stops.lastIndexOf(currentLocation);
+
+                        if (transportType && line.type !== transportType) continue;
+
+                        // Controlla la direzione della tratta
+                        let reverse = forwardIndex > line.stops.indexOf(to);
+                        let schedule = generateTimetable(line, reverse);
+
+                        let stops = reverse ? [...line.stops].reverse() : line.stops;
+
+                        for (let i = 0; i < stops.length - 1; i++) {
+                            if (stops[i] === currentLocation) {
+                                let nextStop = stops[i + 1];
+
+                                if (!visited.has(nextStop) && schedule[currentLocation] >= currentTime) {
+                                    let travelTime = calculateTravelTime(currentLocation, nextStop);
+                                    let newRoute = [...currentRoute, {
+                                        line: line.line,
+                                        from: currentLocation,
+                                        to: nextStop,
+                                        departure: schedule[currentLocation],
+                                        arrival: schedule[nextStop],
+                                        duration: `${Math.floor(travelTime / 60)}h ${travelTime % 60}m`
+                                    }];
+                                    queue.push({ location: nextStop, route: newRoute, time: schedule[nextStop] });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            document.getElementById("route-info").innerText = "Nessun percorso disponibile.";
+            document.getElementById("route-table").style.display = "none";
+        }
+
+
+
+        function displayRoute(route) {
+            let tableBody = document.getElementById("route-results");
+            tableBody.innerHTML = "";
+
+            let tableHTML = `<table class='route-table'>
+                                <thead>
+                                    <tr>
+                                        <th>Trasporto</th>
+                                        <th>Partenza</th>
+                                        <th>Arrivo</th>
+                                        <th>Ora Partenza</th>
+                                        <th>Ora Arrivo</th>
+                                        <th>Durata</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+            route.forEach(segment => {
+                let transport = transportLines.find(t => t.line === segment.line);
+                if (transport && transport.direction && transport.direction !== `${segment.from}-${segment.to}`) {
+                    return; // Ignora i trasporti che non vanno in quella direzione
+                }
+
+                tableHTML += `<tr>
+                                    <td>${segment.line}</td>
+                                    <td>${segment.from}</td>
+                                    <td>${segment.to}</td>
+                                    <td>${segment.departure}</td>
+                                    <td>${segment.arrival}</td>
+                                    <td>${segment.duration}</td>
+                                </tr>`;
+            });
+
+            tableHTML += `</tbody></table>`;
+            tableBody.innerHTML = tableHTML;
+            document.getElementById("route-table").style.display = "block";
+            document.getElementById("route-info").innerText = "Percorso disponibile:";
+        }
+    </script>
+
+    <div class="nav-buttons">
+        <a href="biglietti.html">🎟️ Acquista dei biglietti</a>
+        <a href="../index.html">🏠 Indietro all'indice</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impero del Popolo e del Senato di Aspakei</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --imperial-red: #8B0000;
+            --golden: #D4AF37;
+            --deep-brown: #432818;
+            --noble-brown: #6F1D1B;
+            --soft-yellow: #FFE6A7;
+        }
+
+        body {
+            background-color: var(--deep-brown);
+            color: var(--soft-yellow);
+            font-family: "Times New Roman", serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .content {
+            background-color: var(--imperial-red);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+            border: 3px solid var(--golden);
+        }
+
+        h1 {
+            color: var(--golden);
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--noble-brown);
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--soft-yellow);
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: 2px solid var(--golden);
+        }
+
+            .category:hover {
+                background: var(--golden);
+                color: var(--deep-brown);
+            }
+
+        .subcategory-container {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .subcategory {
+            display: block;
+            padding: 10px;
+            background: var(--soft-yellow);
+            color: var(--deep-brown);
+            border-radius: 5px;
+            margin: 5px auto;
+            width: 80%;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+            .subcategory:hover {
+                background: var(--golden);
+                color: var(--deep-brown);
+            }
+    </style>
+</head>
+<body>
+    <h1>Impero del Popolo e del Senato di Aspakei</h1>
+    <div class="content">
+        <div class="category" onclick="toggleSubcategories('imperial-history')">⚔️ Storia dell'Impero</div>
+        <div class="subcategory-container" id="imperial-history">
+            <a href="File/history_chapter1.html" class="subcategory">Capitolo 1</a>
+            <a href="File/history_chapter2.html" class="subcategory">Capitolo 2</a>
+            <a href="File/history_chapter3.html" class="subcategory">Capitolo 3</a>
+            <a href="File/history_chapter4.html" class="subcategory">Capitolo 4</a>
+            <a href="File/history_chapter5.html" class="subcategory">Capitolo 5</a>
+            <a href="File/history_chapter6.html" class="subcategory">Capitolo 6</a>
+            <a href="File/history_chapter7.html" class="subcategory">⚠️Capitolo 7</a>
+            <a href="File/history_chapter8.html" class="subcategory">⚠️Capitolo 8</a>
+            <a href="File/history_chapter9.html" class="subcategory">⚠️Capitolo 9</a>
+            <a href="File/history_chapter10.html" class="subcategory">⚠️Capitolo 10</a>
+            <a href="File/history_chapter11.html" class="subcategory">⚠️Capitolo 11</a>
+            <a href="File/history_chapter12.html" class="subcategory">⚠️Capitolo 12</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('culture')">🏛️ Arte, Sapienza e Tradizioni</div>
+        <div class="subcategory-container" id="culture">
+            <a href="culture.html" class="subcategory">Cultura e Costumi</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('religion')">🌟 Il Fayankesimo</div>
+        <div class="subcategory-container" id="religion">
+            <a href="Fayankesimo/fayankesimo.html" class="subcategory">⚠️Origini e storia del fayankesimo</a>
+            <a href="Fayankesimo/religionBook.html" class="subcategory">Testi Sacri</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('senate')">🏛️ Senato e Leggi</div>
+        <div class="subcategory-container" id="senate">
+            <a href="senate.html" class="subcategory">⚠️Struttura del Senato</a>
+            <a href="costituzione.html" class="subcategory">⚠️Costituzione</a>
+            <a href="CPasp.html" class="subcategory">⚠️Codice Penale</a>
+            <a href="DGasp.html" class="subcategory">⚠️Documenti di gesione senatoriale</a>
+            <a href="DGasp.html" class="subcategory">⚠️Araldica nazionale</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('military')">🛡️ Difesa e Onore</div>
+        <div class="subcategory-container" id="military">
+            <a href="esercito.html" class="subcategory">⚠️Esercito imperiale</a>
+            <a href="arruolamento.html" class="subcategory">⚠️Arruolamento</a>
+            <a href="storia militare.html" class="subcategory">⚠️Storia dell'esercito</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('biographies')">📜 Figure Storiche</div>
+        <div class="subcategory-container" id="biographies">
+            <a href="Biografie/biografie_generale.html" class="subcategory">⚠️Biografie di personaggi storici</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('visit')">🗺️ Visita i Domini Imperiali</div>
+        <div class="subcategory-container" id="visit">
+            <a href="mappa/mappa.html" class="subcategory">Mappa Interattiva</a>
+            <a href="mappa/mezzi.html" class="subcategory">⚠️Orari dei mezzi pubblici</a>
+            <a href="mappa/turismo.html" class="subcategory">⚠️Percorsi turistici personalizzati</a>
+            <a href="mappa/turismo.html" class="subcategory">⚠️Calendari eventi e festival</a>
+            <a href="mappa/turismo.html" class="subcategory">⚠️Luoghi turistici e culturali</a>
+            <a href="mappa/turismo.html" class="subcategory">⚠️Regolamento per i turisti</a>
+            <a href="mappa/turismo.html" class="subcategory">⚠️Scopri le città principali</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('nature')">🌱 Esplora la natura</div>
+        <div class="subcategory-container" id="nature">
+            <a href="mappa/fauna.html" class="subcategory">⚠️Fauna di Aspakei</a>
+            <a href="mappa/flora.html" class="subcategory">⚠️Flora di Aspakei</a>
+            <a href="mappa/parchi.html" class="subcategory">⚠️Visita i parchi nazionali</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Monitora la qualità dell'aria ed il livello di inquinamento</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('emergency')">💸 Salute e sicurezza</div>
+        <div class="subcategory-container" id="emergency">
+            <a href="mappa/borsa.html" class="subcategory">⚠️Numeri di emergenza</a>
+            <a href="mappa/data.html" class="subcategory">⚠️Sistema di Emergenza</a>
+            <a href="mappa/taro.html" class="subcategory">⚠️Sistema sanitario nazionale</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Piani pandemici</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Statistiche</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Lista delle vaccinazioni obbligatorie e consigliate</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Monitoraggio delle catastrofi naturali</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('school')">🏫 Studia ad Aspakei</div>
+        <div class="subcategory-container" id="school">
+            <a href="mappa/borsa.html" class="subcategory">⚠️Percorso scolastico</a>
+            <a href="mappa/data.html" class="subcategory">⚠️Scambio internazionale</a>
+            <a href="mappa/taro.html" class="subcategory">⚠️Scambio nazionale</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Borse di studio</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Studio universitario</a>
+            <a href="mappa/inquinamento.html" class="subcategory">⚠️Scuole per lingue straniere e corsi di cittadinanza</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('sport')">🏅 Sport</div>
+        <div class="subcategory-container" id="sport">
+            <a href="mappa/borsa.html" class="subcategory">⚠️Squadre sportive nazionali</a>
+            <a href="mappa/data.html" class="subcategory">⚠️Calendario competizioni sportive</a>
+            <a href="mappa/taro.html" class="subcategory">⚠️Aree di pesca regolamentata</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategories('citizenship')">📃 Cittadinanza</div>
+        <div class="subcategory-container" id="citizenship">
+            <a href="mappa/borsa.html" class="subcategory">⚠️Guida alla cittadinanza e ai visti</a>
+            <a href="mappa/data.html" class="subcategory">⚠️Richiesta rifugio politico</a>
+            <a href="mappa/taro.html" class="subcategory">⚠️Registro nascite e decessi</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleSubcategories(categoryId) {
+            let category = document.getElementById(categoryId);
+            let allCategories = document.querySelectorAll('.subcategory-container');
+            allCategories.forEach(cat => {
+                if (cat !== category) {
+                    cat.style.display = 'none';
+                }
+            });
+            category.style.display = category.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>

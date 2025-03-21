@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acquisto Biglietti - Trasporti di Aspakei</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2C1D15;
+            color: #FFE6A7;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .ticket-container {
+            background: #BB9457;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        select, input, button {
+            font-size: 14px;
+            padding: 8px;
+            margin-top: 8px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background-color: #99582A;
+            color: #FFE6A7;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            button:hover {
+                background-color: #FFE6A7;
+                color: #432818;
+            }
+
+        h3 {
+            margin-top: 10px;
+        }
+
+        #payment-status {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+            .nav-buttons a {
+                padding: 10px 20px;
+                background: #BB9457;
+                color: #432818;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+            }
+
+                .nav-buttons a:hover {
+                    background: #FFE6A7;
+                }
+    </style>
+</head>
+<body>
+    <h1>Acquista i tuoi biglietti 🎟️</h1>
+
+    <div class="ticket-container">
+        <label for="from">Partenza:</label>
+        <select id="from"></select>
+
+        <label for="to">Destinazione:</label>
+        <select id="to"></select>
+
+        <label for="transport">Mezzo di trasporto:</label>
+        <select id="transport">
+            <option value="treno">Treno 🚆</option>
+            <option value="bus">Autobus 🚌</option>
+            <option value="traghetto">Traghetto ⛴️</option>
+        </select>
+
+        <label for="class">Classe:</label>
+        <select id="class">
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+            <option value="first">First Class</option>
+        </select>
+
+        <label for="quantity">Numero di biglietti:</label>
+        <input type="number" id="quantity" min="1" max="10" value="1">
+
+        <label for="payment">Metodo di pagamento:</label>
+        <select id="payment">
+            <option value="carta">Carta di credito 💳</option>
+            <option value="paypal">TaroPay 🏦</option>
+            <option value="contanti">Pagamento in contanti 💰</option>
+        </select>
+
+        <h3>Totale: <span id="total-price">0</span> em. (<span id="total-euro">0</span> €)</h3>
+
+        <button onclick="attemptPurchase()">Acquista</button>
+        <p id="payment-status"></p>
+    </div>
+
+    <script>
+        const pricePerKm = {
+            "treno": { "economy": 0.02, "business": 0.04, "first": 0.07 },
+            "bus": { "economy": 0.01, "business": 0.03, "first": 0.06 },
+            "traghetto": { "economy": 0.03, "business": 0.05, "first": 0.08 }
+        };
+
+        const conversionRate = 3.10469;
+
+        const cities = {
+            "Kadekei": { x: 25, y: 25 },
+            "Lucozhkei": { x: 35, y: 30 },
+            "Isozhkei": { x: 34, y: 29 },
+            "Barbarbozhkei": { x: 38, y: 32 },
+            "Borvozhkei": { x: 8, y: 36 },
+            "Spurozhkei": { x: 23, y: 63 },
+            "Sandozhkei": { x: 58, y: 65 },
+            "Dostozhkei": { x: 28, y: 32 },
+            "Olgayozhkei": { x: 30, y: 25 },
+            "Hyperbase": { x: 28, y: 24 },
+            "Afterbridge": { x: 28, y: 28 },
+            "Xayofkei": { x: 54, y: 60 },
+            "Rosozhkei": { x: 56, y: 38 },
+            "Fluvyozhkei": { x: 17, y: 83 }
+        };
+
+        function populateCities() {
+            const fromSelect = document.getElementById("from");
+            const toSelect = document.getElementById("to");
+
+            Object.keys(cities).forEach(city => {
+                let option = new Option(city, city);
+                fromSelect.add(option.cloneNode(true));
+                toSelect.add(option.cloneNode(true));
+            });
+
+            fromSelect.addEventListener("change", updateDestinations);
+        }
+
+        function updateDestinations() {
+            const from = document.getElementById("from").value;
+            const toSelect = document.getElementById("to");
+
+            toSelect.innerHTML = "";
+            Object.keys(cities).forEach(city => {
+                if (city !== from) {
+                    let option = new Option(city, city);
+                    toSelect.add(option);
+                }
+            });
+            calculatePrice();
+        }
+
+        function calculateDistance(city1, city2) {
+            const dx = cities[city2].x - cities[city1].x;
+            const dy = cities[city2].y - cities[city1].y;
+            return Math.sqrt(dx * dx + dy * dy) * 5;
+        }
+
+        function calculatePrice() {
+            const from = document.getElementById("from").value;
+            const to = document.getElementById("to").value;
+            const transport = document.getElementById("transport").value;
+            const selectedClass = document.getElementById("class").value;
+            const quantity = parseInt(document.getElementById("quantity").value);
+
+            if (!from || !to || from === to) {
+                document.getElementById("total-price").innerText = "0";
+                document.getElementById("total-euro").innerText = "0";
+                return;
+            }
+
+            const distance = calculateDistance(from, to);
+            const basePrice = pricePerKm[transport][selectedClass] * distance;
+            const totalPrice = (basePrice * quantity).toFixed(2);
+            const totalEuro = (totalPrice * conversionRate).toFixed(2);
+
+            document.getElementById("total-price").innerText = totalPrice;
+            document.getElementById("total-euro").innerText = totalEuro;
+        }
+
+        function attemptPurchase() {
+            const errors = [
+                "❌ Errore: La transazione è stata rifiutata dalla banca.",
+                "❌ Errore: Fondi insufficienti.",
+                "❌ Errore: Problema di connessione con il sistema di pagamento.",
+                "❌ Errore: La carta inserita non è valida.",
+                "❌ Errore: Pagamento negato per motivi di sicurezza."
+            ];
+            document.getElementById("payment-status").innerText = errors[Math.floor(Math.random() * errors.length)];
+        }
+
+        document.getElementById("transport").addEventListener("change", calculatePrice);
+        document.getElementById("class").addEventListener("change", calculatePrice);
+        document.getElementById("quantity").addEventListener("input", calculatePrice);
+        document.getElementById("to").addEventListener("change", calculatePrice);
+
+        populateCities();
+    </script>
+
+    <div class="nav-buttons">
+        <a href="mappa.html">⬅ Torna alla mappa</a>
+        <a href="../index.html">🏠 Indietro all'indice</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteo in tempo reale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #432818;
+            color: #FFE6A7;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .weather-container {
+            background: #BB9457;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            font-size: 18px;
+        }
+
+        .alert {
+            font-weight: bold;
+            color: #FF4D4D;
+        }
+
+        select {
+            font-size: 16px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Meteo attuale a <span id="city-name">Kadekei</span> 🌍</h1>
+
+    <select id="city-selector">
+        <option value="Kadekei">Kadekei</option>
+        <option value="Hyperbase">Hyperbase</option>
+        <option value="Olgayozhkei">Olgayozhkei</option>
+        <option value="Afterbridge">Afterbridge</option>
+        <option value="Isozhkei">Isozhkei</option>
+        <option value="Lucozhkei">Lucozhkei</option>
+        <option value="Barbarbozhkei">Barbarbozhkei</option>
+        <option value="Rosozhkei">Rosozhkei</option>
+        <option value="Xayofkei">Xayofkei</option>
+        <option value="Borvozhkei">Borvozhkei</option>
+        <option value="Spursozhkei">Spursozhkei</option>
+        <option value="Sandozhkei">Sandozhkei</option>
+        <option value="Fluvyozhkei">Fluvyozhkei</option>
+    </select>
+
+    <div class="weather-container">
+        <p id="weather-data">Caricamento dati meteo...</p>
+        <p id="weather-alert" class="alert"></p>
+        <h3>📅 Previsioni per le prossime ore:</h3>
+        <p id="weather-forecast"></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cities = {
+                "Kadekei": "montagna",
+                "Hyperbase": "montagna",
+                "Olgayozhkei": "montagna",
+                "Afterbridge": "montagna",
+                "Isozhkei": "tundra",
+                "Lucozhkei": "tundra",
+                "Barbarbozhkei": "tundra",
+                "Rosozhkei": "collina-lago",
+                "Xayofkei": "pianura",
+                "Borvozhkei": "collina-mare",
+                "Spursozhkei": "foresta-abete",
+                "Sandozhkei": "deserto-fiume",
+                "Fluvyozhkei": "pianura-fiume"
+            };
+
+            const biomes = {
+                "montagna": { conditions: ["Neve ❄️", "Soleggiato ☀️", "Tempesta di neve 🌨️"], tempRange: [-5, 15] },
+                "tundra": { conditions: ["Neve fitta 🌨️", "Ghiaccio 🧊", "Tempesta di neve ❄️"], tempRange: [-15, 5] },
+                "collina-lago": { conditions: ["Nebbia 🌫️", "Pioggia leggera 🌦️", "Soleggiato ☀️"], tempRange: [5, 20] },
+                "pianura": { conditions: ["Soleggiato ☀️", "Nuvoloso ☁️", "Temporale ⛈️"], tempRange: [10, 30] },
+                "collina-mare": { conditions: ["Vento forte 💨", "Nuvoloso ☁️", "Soleggiato ☀️"], tempRange: [8, 25] },
+                "foresta-abete": { conditions: ["Pioggia 🌧️", "Nebbia 🌫️", "Soleggiato tra gli alberi 🌲"], tempRange: [3, 18] },
+                "deserto-fiume": { conditions: ["Siccità 🏜️", "Tempesta di sabbia 🌪️", "Pioggia improvvisa 🌧️"], tempRange: [15, 40] },
+                "pianura-fiume": { conditions: ["Soleggiato ☀️", "Temporale ⛈️", "Alluvione 🚨"], tempRange: [12, 30] }
+            };
+
+            function getRealisticWeather(city, hoursAhead = 0) {
+                const biome = biomes[cities[city]];
+                const hour = new Date().getHours() + hoursAhead;
+                const condition = biome.conditions[Math.floor(Math.random() * biome.conditions.length)];
+                let temperature = Math.floor(Math.random() * (biome.tempRange[1] - biome.tempRange[0] + 1)) + biome.tempRange[0];
+
+                // Ciclo giorno/notte
+                if ((hour % 24) >= 20 || (hour % 24) < 6) {
+                    temperature -= 5;
+                }
+
+                const wind = Math.floor(Math.random() * 40);
+                const humidity = Math.floor(Math.random() * 60) + 30;
+                const precipitation = condition.includes("Pioggia") || condition.includes("Neve") ? Math.floor(Math.random() * 80) + 20 : Math.floor(Math.random() * 20);
+                const alerts = ["Nessuna allerta", "Allerta vento forte 🌬️", "Allerta inondazione 🚨", "Allerta neve intensa ❄️", "Allerta caldo estremo 🔥"];
+                const alert = Math.random() < 0.2 ? alerts[Math.floor(Math.random() * alerts.length)] : "Nessuna allerta";
+
+                return { condition, temperature, wind, humidity, precipitation, alert };
+            }
+
+            function updateWeather() {
+                let selectedCity = document.getElementById("city-selector").value;
+                let currentWeather = getRealisticWeather(selectedCity);
+
+                document.getElementById('weather-data').innerHTML = `
+                        <strong>${currentWeather.condition}</strong> <br>
+                        🌡️ <strong>Temperatura:</strong> ${currentWeather.temperature}°C <br>
+                        💨 <strong>Vento:</strong> ${currentWeather.wind} km/h <br>
+                        💧 <strong>Umidità:</strong> ${currentWeather.humidity}% <br>
+                        🌧️ <strong>Precipitazioni:</strong> ${currentWeather.precipitation}%
+                    `;
+                document.getElementById('weather-alert').textContent = currentWeather.alert;
+
+                let forecast = "";
+                for (let i = 1; i <= 6; i++) {
+                    let futureWeather = getRealisticWeather(selectedCity, i);
+                    forecast += `⏳ +${i}h: ${futureWeather.condition}, ${futureWeather.temperature}°C<br>`;
+                }
+                document.getElementById('weather-forecast').innerHTML = forecast;
+            }
+
+            document.getElementById("city-selector").addEventListener("change", updateWeather);
+            updateWeather();
+            setInterval(updateWeather, 30000);
+        });
+    </script>
+</body>
+</html>
