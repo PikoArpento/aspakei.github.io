@@ -3,26 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storia Capitolo 1</title>
+    <title>Capitolo 1</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: #432818;
-            color: #FFE6A7;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
             text-align: center;
-            padding: 50px;
         }
-
-        .content {
-            background-color: #BB9457;
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            text-align: left;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links li {
+            display: inline;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .container {
             max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
         }
-
         .image-gallery {
             display: flex;
             flex-wrap: wrap;
@@ -30,61 +58,65 @@
             gap: 15px;
             margin-top: 20px;
         }
-
         .image-container {
             text-align: center;
             flex: 1 1 200px;
             max-width: 200px;
         }
-
-            .image-container img {
-                width: 100%;
-                height: auto;
-                cursor: pointer;
-                border-radius: 10px;
-                transition: transform 0.3s ease;
-                display: block;
-            }
-
-                .image-container img:hover {
-                    transform: scale(1.1);
-                }
-
+        .image-container img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+        }
         .caption {
             font-size: 14px;
-            color: #FFE6A7;
+            color: #333;
             margin-top: 5px;
-            background-color: #BB9457;
+            background-color: #f0f0f0;
             padding: 5px;
             border-radius: 5px;
-            text-align: center;
         }
-
         .nav-buttons {
             margin-top: 20px;
             display: flex;
             justify-content: center;
             gap: 15px;
         }
-
-            .nav-buttons a {
-                padding: 10px 20px;
-                background: #BB9457;
-                color: #432818;
-                text-decoration: none;
-                font-weight: bold;
-                border-radius: 5px;
-                transition: background 0.3s ease;
-            }
-
-                .nav-buttons a:hover {
-                    background: #FFE6A7;
-                }
+        .nav-buttons a {
+            padding: 10px 20px;
+            background: #ddd;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .nav-buttons a:hover {
+            background: lightgray;
+        }
     </style>
 </head>
 <body>
-    <h1>Storia dell'impero - Capitolo 1, prima dell'indipendenza</h1>
-    <div class="content">
+    <div class="navbar">
+        <div class="logo">
+            <img src="../flag.png" alt="Logo">
+            <span>Aspakei</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+    <div class="hero">
+        <h1>Storia dell'impero - Capitolo 1, prima dell'indipendenza</h1>
+    </div>
+    <div class="container">
         <p>
             Prima dell'indipendenza, l'attuale popolo dell'Impero di Aspakei era sotto il controllo del Regno di Elu,
             che controllava tre grandi culture locali: la loro, gli Harmoni, e i Kondo. Questi ultimi sono i principali componenti di Aspakei,
@@ -114,7 +146,7 @@
             Senato Aspakei.
         </p>
         <p>
-            Mentre la tempesta eterna infuriava fuori dalla grotta, Xargur e gli esploratori, che ora si chiamavano i "Compagni di Caverna",
+            Mentre la bufera infernal che mai non resta infuriava fuori dalla grotta, Xargur e gli esploratori, che ora si chiamavano i "Compagni di Caverna",
             svilupparono un legame indissolubile. Con il passare dei giorni, la strategia prese forma. Il 15 Luglio del 400 p.i., Xargur e i 
             suoi alleati scelsero di chiamare questo patto "Il Trattato della Montagna". Il Trattato della Montagna
             stabilì che una volta ottenuta l’indipendenza, una nazione sarebbe stata fondata sulla base dei principi dell’indipendenza
@@ -132,13 +164,17 @@
     <div class="image-gallery">
         <div class="image-container">
             <img src= "hisCh1Pr1.png" alt="MissingImage">
-            <div class="caption">Divisione culturale nel Regno di Elu: Rosa - Elu; Blu - Harmoni; Verde - Kondo.</div>
+            <div class="caption">
+                <div> Divisione culturale nel Regno di Elu:</div>
+                <div> Rosa - Elu; </div>
+                <div> Blu - Harmoni </div>
+                <div> Verde - Kondo </div>
+            </div>
         </div>
     </div>
     <div>
         <div class="nav-buttons">
-            <a href="../index.html">🏠 Indietro all'indice</a>
-            <a href="hisCh1Pr2.html">prossimo ➡</a>
+            <a href="hisCh1Pr2.html">Next ➡</a>
         </div>
     </div>
 </body>
