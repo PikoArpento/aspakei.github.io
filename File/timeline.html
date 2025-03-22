@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: darkslategray;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0055a5;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #0055a5;
+        }
+
+        .hero {
+            position: relative;
+            background: url(history_background.jpg) center/cover no-repeat;
+            height: 100vh;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 2;
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: #f0e3d5;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding-top: 50px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: darkgray;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .container {
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            padding: 20px 40px;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid #FF9F55;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -16px;
+        }
+
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .container::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Aspakei</div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Timeline della storia di Aspakei</h1>
+    </section>
+
+    <main>
+        <div class="timeline" id="timeline">
+            <div class="container left">
+                <div class="content">
+                    <h2>6 Maggio 401 p.I.</h2>
+                    <p><a href="hisCh1Pr1.html">A Kadekei scoppia la rivolta di Maggio</a></p>
+                </div>
+            </div>
+            <div class="container right">
+                <div class="content">
+                    <h2>15 Luglio 400 p.I.</h2>
+                    <p>Xargur, Qi, e Somoa firmano il Trattato della Montagna</p>
+                </div>
+            </div>
+            <div class="container left">
+                <div class="content">
+                    <h2>24 Ottobre 399 p.I.</h2>
+                    <p><a href="hisCh1Pr2.html">Xargur, Qi, e Somoa, insieme all'esercito mettono in atto il colpo di stato</a></p>
+                </div>
+            </div>
+            <div class="container right">
+                <div class="content">
+                    <h2>25 Ottobre 399 p.I.</h2>
+                    <p><a href="hisCh1Pr3.html">Il ministro della difesa Elu dichiara guerra ai ribelli</a></p>
+                </div>
+            </div>
+            <div class="container left">
+                <div class="content">
+                    <h2>Agosto 397 p.I.</h2>
+                    <p>Aspakei si allea con la Repubblica di Tehera, che si unisce alla Prima Guerra Civile</p>
+                </div>
+            </div>
+            <div class="container right">
+                <div class="content">
+                    <h2>24 Ottobre 397 p.I.</h2>
+                    <p>Il Regno di Elu si arrende, terminando la Prima Guerra Civile</p>
+                </div>
+            </div>
+            <div class="container left">
+                <div class="content">
+                    <h2>15 Dicembre 397 p.I.</h2>
+                    <p><a href="hisCh2Pr2.html">La Repubblica di Aspakei viene ufficialmente riconosciuta a livello internazionale</a></p>
+                </div>
+            </div>
+            <div class="container right">
+                <div class="content">
+                    <h2>1 Gennaio 385 p.I.</h2>
+                    <p>Insieme a Tehera e Mal, Aspakei firma il Trattato delle Repubbliche, un'alleanza economica e militare difensiva</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
