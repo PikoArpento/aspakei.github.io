@@ -3,53 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History - Chapter 3</title>
+    <title>Storia - Capitolo 3</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: #432818;
-            color: #FFE6A7;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
             text-align: center;
-            padding: 50px;
         }
-
-        .content {
-            background-color: #BB9457;
-            padding: 20px;
-            border-radius: 10px;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links li {
+            display: inline;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .container {
             max-width: 800px;
-            margin: auto;
-            text-align: left;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        .file-link {
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .button {
             display: block;
-            padding: 10px;
-            background: #FFE6A7;
-            color: #432818;
+            background-color: #f0f0f0;
+            color: rgb(77, 76, 76);
+            padding: 15px;
             border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
             text-decoration: none;
             font-weight: bold;
         }
+        .button:hover {
+            background-color:lightgray;
+        }
+        .back-button {
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .hero {
+            position: relative;
+            background: url(history_background.jpg) center/cover no-repeat;
+            height: 75vh;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
 
-            .file-link:hover {
-                background: #BB9457;
-                color: #FFE6A7;
+            .hero::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1;
             }
+
+            .hero h1 {
+                font-family: "Merriweather", serif;
+                position: relative;
+                z-index: 2;
+                font-size: 3rem;
+                color: #fff;
+                text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+                animation: fadeInDown 1s ease-out;
+                margin: 0 1rem;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: #f0e3d5;
+            }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>History - Chapter 3</h1>
-    <div class="content">
-        <a href="hisCh3Pr1.html" class="file-link">Political tensions raising</a>
-        <a href="hisCh3Pr2.html" class="file-link">Torvoynko's coup</a>
-        <a href="hisCh3Pr3.html" class="file-link">Torvoynko’s government</a>
-        <a href="hisCh3Pr4.html" class="file-link">The crisis after Torvoynko</a>
-        <a href="hisCh3Pr5.html" class="file-link">The Kadekei Accords</a>
-    </div>
-    <a href="../index.html">Back to Categories</a>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../flag.png" alt="Aspakei Logo">
+                <span>Aspakei</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="contact.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>Storia dell'Impero - Capitolo 3</h1>
+    </section>
+
+    <main class="container">
+        <div class="button-container">
+            <a href="hisCh3Pr1.html" class="button">Crescenti tesnioni politiche</a>
+            <a href="hisCh3Pr2.html" class="button">Il colpo di stato di Torvoynko</a>
+            <a href="hisCh3Pr3.html" class="button">Il governo di Torvoynko</a>
+            <a href="hisCh3Pr4.html" class="button">La crisi dopo Torvoynko</a>
+            <a href="hisCh3Pr5.html" class="button">Gli Accordi di Kadekei</a>    
+        </div>
+    </main>
 </body>
 </html>
