@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadekei Meteo</title>
+    <link rel="stylesheet" id="weather-style" href="styles.css">
+    <script src="animations.js" defer></script>
+    <script src="meteo_kadekei.js" defer></script>
+    <style>
+        main.container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0055a5;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: 1000;
+        }
+
+        /* Stile meteo attuale */
+        .meteo-attuale {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .icona-meteo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Kadekei Meteo</div>
+    </header>
+
+    <canvas id="canvasLig"></canvas>
+    <div id="rainy-container"></div>
+    <div class="more-snow"></div>
+    <div id="foglayer_01" class="fog">
+        <div class="image01"></div>
+        <div class="image02"></div>
+    </div>
+    <div id="foglayer_02" class="fog">
+        <div class="image01"></div>
+        <div class="image02"></div>
+    </div>
+    <div id="foglayer_03" class="fog">
+        <div class="image01"></div>
+        <div class="image02"></div>
+    </div>
+    <div class='clouds-1'></div>
+    <div class='clouds-2'></div>
+    <div class='clouds-3'></div>
+    <div class="sun"></div>
+    <div id="containerLeaf"></div>
+
+    <div class="overlay">
+        <div>
+            <main class="container">
+                <h2>Previsioni Meteo per Kadekei</h2>
+                <li>🌡️ Temperatura: <span id="temp">--</span>°C</li>
+                <li>💧 Umidità: <span id="umidita">--</span>%</li>
+                <li>🌬️ Vento: <span id="vento">--</span> km/h</li>
+                <li>🌀 Pressione: <span id="pressione">--</span> hPa</li>
+                <div class="meteo-attuale" id="meteo-attuale">Caricamento...</div>
+                <p id="weather-description"></p>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
