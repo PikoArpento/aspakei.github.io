@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,36 +7,85 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: #432818;
-            color: #FFE6A7;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 96%;
+            z-index: 1000;
+        }
+
+            header .logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #0055a5;
+            }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+            nav ul li {
+                margin-left: 1.5rem;
+            }
+
+                nav ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    transition: color 0.3s ease;
+                }
+
+                    nav ul li a:hover {
+                        color: #0055a5;
+                    }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img.flag {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+
         .map-container {
-            position: relative;
+            position:relative;
+            left: 25%;
             display: inline-block;
             margin-bottom: 30px;
         }
-
         .map {
             width: 100%;
             max-width: 800px;
             border-radius: 10px;
         }
-
         .map-icon {
             position: absolute;
             width: 24px;
             height: 24px;
             cursor: pointer;
         }
-
         .tooltip {
             visibility: hidden;
             width: 180px;
-            background-color: #FFE6A7;
+            background-color: darkgray;
             color: #432818;
             text-align: center;
             padding: 5px;
@@ -46,23 +95,20 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
         .map-icon:hover .tooltip {
             visibility: visible;
             opacity: 1;
         }
-
         .transport-container {
-            background: #BB9457;
+            background:darkgray;
             padding: 20px;
             border-radius: 10px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
             text-align: left;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.9);
         }
-
         .transport-form label, .transport-form select, .transport-form input, .transport-form button {
             display: block;
             width: 100%;
@@ -72,91 +118,39 @@
             border-radius: 5px;
             border: none;
         }
-
         .transport-form button {
-            background: #99582A;
-            color: #FFE6A7;
+            background: #0055a5;
+            color: white;
             cursor: pointer;
             font-weight: bold;
             transition: background 0.3s ease;
         }
-
-            .transport-form button:hover {
-                background: #FFE6A7;
-                color: #432818;
-            }
-
-        .route-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
+        .transport-form button:hover {
+            background: red;
+            color: #432818;
         }
-
-            .route-table th, .route-table td {
-                padding: 12px;
-                text-align: center;
-                border-bottom: 2px solid #432818;
-            }
-
-            .route-table th {
-                background-color: #99582A;
-                color: #FFE6A7;
-                font-size: 18px;
-            }
-
-            .route-table tr:nth-child(even) {
-                background-color: #BB9457;
-            }
-
-            .route-table tr:nth-child(odd) {
-                background-color: #E7C083;
-            }
-
-            .route-table tr:hover {
-                background-color: #FFE6A7;
-                color: #432818;
-                cursor: pointer;
-                transform: scale(1.02);
-                transition: all 0.2s ease-in-out;
-            }
-
-        .nav-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-            .nav-buttons a {
-                padding: 10px 20px;
-                background: #BB9457;
-                color: #432818;
-                text-decoration: none;
-                font-weight: bold;
-                border-radius: 5px;
-                transition: background 0.3s ease;
-            }
-
-                .nav-buttons a:hover {
-                    background: #FFE6A7;
-                }
     </style>
 </head>
 <body>
-    <h1>Visita Aspakei</h1>
+    <header>
+        <div class="logo">
+            <img src="../flag.png" alt="Bandiera di Aspakei" class="flag">
+            Aspakei
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="biglietti.html">Compra i biglietti</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <div class="map-container">
         <img src="map.jpg" alt="Map of the Empire" class="map">
-
         <div class="map-icon" style="top: 25%; left: 25%;">
             <img src="icon.png" alt="Kadekei">
             <div class="tooltip">
                 <strong>Kadekei</strong><br>
-                <a href="capital.html">Go to page</a>
             </div>
         </div>
 
@@ -164,7 +158,6 @@
             <img src="icon.png" alt="Lucozhkei">
             <div class="tooltip">
                 <strong>Lucozhkei</strong><br>
-                <a href="tradehub.html">Go to page</a>
             </div>
         </div>
 
@@ -172,7 +165,6 @@
             <img src="icon.png" alt="Isozhkei">
             <div class="tooltip">
                 <strong>Isozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -180,7 +172,6 @@
             <img src="icon.png" alt="Barbarbozhkei">
             <div class="tooltip">
                 <strong>Barbarbozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -188,7 +179,6 @@
             <img src="icon.png" alt="Borvozhkei">
             <div class="tooltip">
                 <strong>Borvozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -196,7 +186,6 @@
             <img src="icon.png" alt="Spursozhkei">
             <div class="tooltip">
                 <strong>Spurozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -204,7 +193,6 @@
             <img src="icon.png" alt="Sandozhkei">
             <div class="tooltip">
                 <strong>Sandozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -212,7 +200,6 @@
             <img src="icon.png" alt="Dostozhkei">
             <div class="tooltip">
                 <strong>Dostozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -220,7 +207,6 @@
             <img src="icon.png" alt="Olgayozhkei">
             <div class="tooltip">
                 <strong>Olgayozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -228,7 +214,6 @@
             <img src="icon_NRPL.png" alt="Hyperbase">
             <div class="tooltip">
                 <strong>NRPL of the Hyperbase</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -236,7 +221,6 @@
             <img src="icon_NRPL.png" alt="Afterbridge">
             <div class="tooltip">
                 <strong>NRPL of the Afterbridge</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -244,7 +228,6 @@
             <img src="icon_NRPL.png" alt="Xayofkei">
             <div class="tooltip">
                 <strong>NRPL of Xayofkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -252,7 +235,6 @@
             <img src="icon.png" alt="Rosozhkei">
             <div class="tooltip">
                 <strong>Rosozhkei</strong><br>
-                <a href="portcity.html">Go to page</a>
             </div>
         </div>
 
@@ -260,7 +242,6 @@
             <img src="icon.png" alt="Fluvyozhkei">
             <div class="tooltip">
                 <strong>Fluvyozhkei</strong><br>
-                <a href="mountainvillage.html">Go to page</a>
             </div>
         </div>
 
@@ -268,7 +249,6 @@
             <img src="icon.png" alt="Mountain Village">
             <div class="tooltip">
                 <strong>Fluvyozhkei</strong><br>
-                <a href="mountainvillage.html">Go to page</a>
             </div>
         </div>
     </div>
@@ -491,10 +471,5 @@
             document.getElementById("route-info").innerText = "Percorso disponibile:";
         }
     </script>
-
-    <div class="nav-buttons">
-        <a href="biglietti.html">🎟️ Acquista dei biglietti</a>
-        <a href="../index.html">🏠 Indietro all'indice</a>
-    </div>
 </body>
 </html>
