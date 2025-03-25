@@ -95,6 +95,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         .map-icon:hover .tooltip {
             visibility: visible;
             opacity: 1;
@@ -129,6 +130,39 @@
             background: red;
             color: #432818;
         }
+        .highlight {
+            background-color: #e6f7ff;
+            font-weight: bold;
+        }
+        .route-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .route-table th, .route-table td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: center;
+            }
+
+            .route-table th {
+                background: #0055a5;
+                color: white;
+                font-size: 16px;
+            }
+
+            .route-table tr:nth-child(even) {
+                background: #f9f9f9;
+            }
+
+            .route-table tr:hover {
+                background: #f1f1f1;
+            }
     </style>
 </head>
 <body>
@@ -274,10 +308,6 @@
                 <option value="ferry">Traghetto</option>
             </select>
 
-
-            <label for="time">Scegli orario di partenza:</label>
-            <input type="time" id="time">
-
             <button type="button" onclick="findBestRoute()">Trova tratta</button>
         </form>
         <p id="route-info"></p>
@@ -288,14 +318,151 @@
     </div>
 
     <script>
+        const transportLines = [
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "08:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "08:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "09:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "09:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "10:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "10:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "11:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "11:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "12:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "12:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "13:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "13:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "14:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "14:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "15:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "15:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "16:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "16:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "17:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "17:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "18:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "18:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "19:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "19:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "20:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "20:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "21:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "21:40" },
+            { line: "Bus Rosso", type: "bus", stops: ["Kadekei", "Olgayozhkei", "Lucozhkei", "Isozhkei", "Barbarbozhkei"], startTime: "22:00" },
+            { line: "Bus Rosso", type: "bus", stops: ["Barbarbozhkei", "Isozhkei", "Lucozhkei", "Olgayozhkei", "Kadekei"], startTime: "22:40" },
 
-        document.querySelectorAll('.map-icon').forEach(icon => {
-            icon.addEventListener('click', function () {
-                const cityName = this.querySelector('img').alt.trim();
-                sessionStorage.setItem("selectedCity", cityName);
-                window.open("meteo.html", "_blank", "width=400,height=500");
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "08:30" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "09:35" },
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "10:40" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "11:45" },
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "12:50" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "13:55" },
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "15:00" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "16:05" },
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "17:10" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "18:15" },
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "19:20" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "20:25" },
+            { line: "Treno Rosso", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei", "Dostozhkei", "Borvozhkei"], startTime: "21:30" },
+            { line: "Treno Rosso", type: "train", stops: ["Borvozhkei", "Dostozhkei", "Isozhkei", "Lucozhkei", "Kadekei"], startTime: "22:35" },
+
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "08:00" },
+            { line: "Treno Verde", type: "train", stops: ["Sandozhkei", "Fluvyozhkei", "Spursozhkei", "Borvozhkei", "Kadekei"], startTime: "10:25" },
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "11:45" },
+            { line: "Treno Verde", type: "train", stops: ["Sandozhkei", "Fluvyozhkei", "Spursozhkei", "Borvozhkei", "Kadekei"], startTime: "12:50" },
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "13:55" },
+            { line: "Treno Verde", type: "train", stops: ["Sandozhkei", "Fluvyozhkei", "Spursozhkei", "Borvozhkei", "Kadekei"], startTime: "15:00" },
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "16:05" },
+            { line: "Treno Verde", type: "train", stops: ["Sandozhkei", "Fluvyozhkei", "Spursozhkei", "Borvozhkei", "Kadekei"], startTime: "17:10" },
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "18:15" },
+            { line: "Treno Verde", type: "train", stops: ["Sandozhkei", "Fluvyozhkei", "Spursozhkei", "Borvozhkei", "Kadekei"], startTime: "19:20" },
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "20:25" },
+            { line: "Treno Verde", type: "train", stops: ["Sandozhkei", "Fluvyozhkei", "Spursozhkei", "Borvozhkei", "Kadekei"], startTime: "21:30" },
+            { line: "Treno Verde", type: "train", stops: ["Kadekei", "Borvozhkei", "Spursozhkei", "Fluvyozhkei", "Sandozhkei"], startTime: "22:35" },
+
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "08:15" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "09:40" },
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "10:45" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "11:50" },
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "12:55" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "14:00" },
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "15:05" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "16:10" },
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "17:15" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "18:20" },
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "19:25" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "20:30" },
+            { line: "Treno Blu", type: "train", stops: ["Spursozhkei", "Fluvyozhkei", "Sandozhkei", "Xayofkei"], startTime: "21:35" },
+            { line: "Treno Blu", type: "train", stops: ["Xayofkei", "Sandozhkei", "Fluvyozhkei", "Spursozhkei"], startTime: "22:40" },
+
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "08:00" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "09:15" },
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "10:20" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "11:25" },
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "12:30" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "13:35" },
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "14:40" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "15:45" },
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "16:50" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "17:55" },
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "19:00" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "20:05" },
+            { line: "Treno Arancio", type: "train", stops: ["Hyperbase", "Afterbridge", "Xayofkei"], startTime: "21:10" },
+            { line: "Treno Arancio", type: "train", stops: ["Xayofkei", "Afterbridge", "Hyperbase"], startTime: "22:15" },
+
+
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "08:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "09:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "10:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "11:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "12:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "13:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "14:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "15:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "16:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "17:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "18:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "19:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "20:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "21:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Barbarbozhkei", "Rosozhkei"], startTime: "22:00" },
+            { line: "Traghetto Rosa", type: "ferry", stops: ["Rosozhkei", "Barbarbozhkei"], startTime: "23:00" },
+
+            { line: "Aereo Rosso", type: "plane", stops: ["Kadekei", "Sandozhkei"], startTime: "08:10" },
+            { line: "Aereo Rosso", type: "plane", stops: ["Sandozhkei", "Kadekei"], startTime: "10:30" },
+            { line: "Aereo Rosso", type: "plane", stops: ["Kadekei", "Sandozhkei"], startTime: "16:10" },
+            { line: "Aereo Rosso", type: "plane", stops: ["Sandozhkei", "Kadekei"], startTime: "18:30" },
+
+            { line: "Aereo Verde", type: "plane", stops: ["Kadekei", "Fluvyozhkei"], startTime: "08:20" },
+            { line: "Aereo Verde", type: "plane", stops: ["Fluvyozhkei", "Kadekei"], startTime: "10:40" },
+            { line: "Aereo Verde", type: "plane", stops: ["Kadekei", "Fluvyozhkei"], startTime: "16:20" },
+            { line: "Aereo Verde", type: "plane", stops: ["Fluvyozhkei", "Kadekei"], startTime: "18:40" },
+
+            { line: "Aereo Rosa", type: "plane", stops: ["Kadekei", "Rosozhkei"], startTime: "08:40" },
+            { line: "Aereo Rosa", type: "plane", stops: ["Rosozhkei", "Kadekei"], startTime: "10:30" },
+            { line: "Aereo Rosa", type: "plane", stops: ["Kadekei", "Rosozhkei"], startTime: "17:40" },
+            { line: "Aereo Rosa", type: "plane", stops: ["Rosozhkei", "Kadekei"], startTime: "19:30" },
+
+            { line: "Aereo Blu", type: "plane", stops: ["Kadekei", "Xayofkei"], startTime: "09:00" },
+            { line: "Aereo Blu", type: "plane", stops: ["Xayofkei", "Kadekei"], startTime: "11:20" },
+            { line: "Aereo Blu", type: "plane", stops: ["Kadekei", "Xayofkei"], startTime: "18:00" },
+            { line: "Aereo Blu", type: "plane", stops: ["Xayofkei", "Kadekei"], startTime: "19:20" }
+        ];
+
+
+        function populateCityOptions() {
+            const fromSelect = document.getElementById("from");
+            const toSelect = document.getElementById("to");
+            const cities = new Set();
+            transportLines.forEach(line => line.stops.forEach(stop => cities.add(stop)));
+            cities.forEach(city => {
+                let option1 = document.createElement("option");
+                let option2 = document.createElement("option");
+                option1.value = option2.value = city;
+                option1.innerText = option2.innerText = city;
+                fromSelect.appendChild(option1);
+                toSelect.appendChild(option2);
             });
-        });
+        }
 
         const cities = {
             "Kadekei": { x: 25, y: 25 },
@@ -313,162 +480,113 @@
             "Rosozhkei": { x: 56, y: 38 },
             "Fluvyozhkei": { x: 17, y: 83 }
         };
-        const transportLines = [
-            { line: "Train X3", type: "train", stops: ["Kadekei", "Lucozhkei", "Isozhkei"], startTime: "08:00" },
-            { line: "Bus 12", type: "bus", stops: ["Kadekei", "Fluvyozhkei", "Sandozhkei"], startTime: "09:30" }
-        ];
-
-
-        function populateCityOptions() {
-            const fromSelect = document.getElementById("from");
-            const toSelect = document.getElementById("to");
-            fromSelect.innerHTML = "";
-            toSelect.innerHTML = "";
-
-            for (const city in cities) {
-                let option1 = document.createElement("option");
-                let option2 = document.createElement("option");
-                option1.value = option2.value = city;
-                option1.innerText = option2.innerText = city.charAt(0).toUpperCase() + city.slice(1);
-                fromSelect.appendChild(option1);
-                toSelect.appendChild(option2);
-            }
-        }
 
         document.addEventListener("DOMContentLoaded", populateCityOptions);
+        function calculateTotalTravelTime(stops, type) {
+            let totalDistance = 0;
 
-        function calculateTravelTime(city1, city2) {
-            const dx = cities[city1].x - cities[city2].x;
-            const dy = cities[city1].y - cities[city2].y;
-            return Math.round(Math.sqrt(dx * dx + dy * dy) * 3); // 3 min per unit distance
-        }
-
-        function generateTimetable(line, reverse = false) {
-            let time = line.startTime.split(":");
-            let hour = parseInt(time[0]), minute = parseInt(time[1]);
-            let schedule = {};
-
-            let stops = reverse ? [...line.stops].reverse() : line.stops;
-
-            for (let i = 0; i < stops.length; i++) {
-                schedule[stops[i]] = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                if (i < stops.length - 1) {
-                    let travelTime = calculateTravelTime(stops[i], stops[i + 1]);
-                    minute += travelTime;
-                    hour += Math.floor(minute / 60);
-                    minute %= 60;
+            for (let i = 0; i < stops.length - 1; i++) {
+                if (cities[stops[i]] && cities[stops[i + 1]]) {
+                    const dx = cities[stops[i + 1]].x - cities[stops[i]].x;
+                    const dy = cities[stops[i + 1]].y - cities[stops[i]].y;
+                    totalDistance += Math.sqrt(dx * dx + dy * dy);
                 }
             }
-            return schedule;
+
+            const speed = {
+                "train": 1.6,
+                "bus": 1.9,
+                "ferry": 3,
+                "plane": 1
+            };
+
+            return Math.round(totalDistance * (speed[type] || 5));
         }
+
 
         function findBestRoute() {
             const from = document.getElementById("from").value;
             const to = document.getElementById("to").value;
-            const selectedTime = document.getElementById("time").value;
-
-            if (from === to) {
-                document.getElementById("route-info").innerText = "Sei già a destinazione.";
-                document.getElementById("route-table").style.display = "none";
-                return;
-            }
-
-            let visited = new Set();
-            let queue = [{ location: from, route: [], time: selectedTime }];
-            let transportType = document.getElementById("transportType").value;
-
-            while (queue.length > 0) {
-                let current = queue.shift();
-                let currentLocation = current.location;
-                let currentRoute = current.route;
-                let currentTime = current.time;
-
-                if (currentLocation === to) {
-                    displayRoute(currentRoute);
-                    return;
-                }
-
-                if (visited.has(currentLocation)) continue;
-                visited.add(currentLocation);
-
-                for (const line of transportLines) {
-                    if (line.stops.includes(currentLocation)) {
-                        let forwardIndex = line.stops.indexOf(currentLocation);
-                        let reverseIndex = line.stops.lastIndexOf(currentLocation);
-
-                        if (transportType && line.type !== transportType) continue;
-
-                        // Controlla la direzione della tratta
-                        let reverse = forwardIndex > line.stops.indexOf(to);
-                        let schedule = generateTimetable(line, reverse);
-
-                        let stops = reverse ? [...line.stops].reverse() : line.stops;
-
-                        for (let i = 0; i < stops.length - 1; i++) {
-                            if (stops[i] === currentLocation) {
-                                let nextStop = stops[i + 1];
-
-                                if (!visited.has(nextStop) && schedule[currentLocation] >= currentTime) {
-                                    let travelTime = calculateTravelTime(currentLocation, nextStop);
-                                    let newRoute = [...currentRoute, {
-                                        line: line.line,
-                                        from: currentLocation,
-                                        to: nextStop,
-                                        departure: schedule[currentLocation],
-                                        arrival: schedule[nextStop],
-                                        duration: `${Math.floor(travelTime / 60)}h ${travelTime % 60}m`
-                                    }];
-                                    queue.push({ location: nextStop, route: newRoute, time: schedule[nextStop] });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            document.getElementById("route-info").innerText = "Nessun percorso disponibile.";
-            document.getElementById("route-table").style.display = "none";
-        }
-
-
-
-        function displayRoute(route) {
-            let tableBody = document.getElementById("route-results");
+            const tableBody = document.getElementById("route-results");
             tableBody.innerHTML = "";
 
-            let tableHTML = `<table class='route-table'>
-                                <thead>
-                                    <tr>
-                                        <th>Trasporto</th>
-                                        <th>Partenza</th>
-                                        <th>Arrivo</th>
-                                        <th>Ora Partenza</th>
-                                        <th>Ora Arrivo</th>
-                                        <th>Durata</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
+            let found = false;
+            let possibleRoutes = [];
 
-            route.forEach(segment => {
-                let transport = transportLines.find(t => t.line === segment.line);
-                if (transport && transport.direction && transport.direction !== `${segment.from}-${segment.to}`) {
-                    return; // Ignora i trasporti che non vanno in quella direzione
+            transportLines.forEach(line => {
+                if (line.stops.includes(from) && line.stops.includes(to)) {
+                    const startIndex = line.stops.indexOf(from);
+                    const endIndex = line.stops.indexOf(to);
+                    if (startIndex < endIndex) {
+                        let travelTime = calculateTotalTravelTime(line.stops.slice(startIndex, endIndex + 1), line.type);
+                        let departureTime = line.startTime.split(":");
+                        let arrivalHour = parseInt(departureTime[0]);
+                        let arrivalMinute = parseInt(departureTime[1]) + travelTime;
+                        arrivalHour += Math.floor(arrivalMinute / 60);
+                        arrivalMinute %= 60;
+                        let arrivalTime = `${arrivalHour.toString().padStart(2, '0')}:${arrivalMinute.toString().padStart(2, '0')}`;
+
+                        possibleRoutes.push({
+                            line: line.line,
+                            type: line.type,
+                            stops: line.stops.slice(startIndex, endIndex + 1).join(" → "),
+                            departure: line.startTime,
+                            arrival: arrivalTime,
+                            duration: `${travelTime} min`
+                        });
+
+                        found = true;
+                    }
                 }
-
-                tableHTML += `<tr>
-                                    <td>${segment.line}</td>
-                                    <td>${segment.from}</td>
-                                    <td>${segment.to}</td>
-                                    <td>${segment.departure}</td>
-                                    <td>${segment.arrival}</td>
-                                    <td>${segment.duration}</td>
-                                </tr>`;
             });
 
-            tableHTML += `</tbody></table>`;
-            tableBody.innerHTML = tableHTML;
-            document.getElementById("route-table").style.display = "block";
-            document.getElementById("route-info").innerText = "Percorso disponibile:";
+            if (!found) {
+                transportLines.forEach(line1 => {
+                    if (line1.stops.includes(from)) {
+                        line1.stops.forEach(transferStop => {
+                            transportLines.forEach(line2 => {
+                                if (line2 !== line1 && line2.stops.includes(transferStop) && line2.stops.includes(to)) {
+                                    let firstLegStops = line1.stops.slice(line1.stops.indexOf(from), line1.stops.indexOf(transferStop) + 1);
+                                    let secondLegStops = line2.stops.slice(line2.stops.indexOf(transferStop), line2.stops.indexOf(to) + 1);
+
+                                    let travelTime1 = calculateTotalTravelTime(firstLegStops, line1.type);
+                                    let travelTime2 = calculateTotalTravelTime(secondLegStops, line2.type);
+                                    let totalTravelTime = travelTime1 + travelTime2 + 5; // +5 min per il cambio
+
+                                    possibleRoutes.push({
+                                        line: `${line1.line} + ${line2.line}`,
+                                        type: `${line1.type} + ${line2.type}`,
+                                        stops: `${from} → ${transferStop} (Cambio) → ${to}`,
+                                        departure: line1.startTime,
+                                        arrival: "Variabile",
+                                        duration: `${totalTravelTime} min`
+                                    });
+
+                                    found = true;
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+
+            if (found) {
+                tableBody.innerHTML = possibleRoutes.map(route => `
+            <tr>
+                <td>${route.line} (${route.type})</td>
+                <td>${route.stops}</td>
+                <td>${route.departure}</td>
+                <td>${route.arrival}</td>
+                <td>${route.duration}</td>
+            </tr>
+        `).join("");
+
+                document.getElementById("route-table").style.display = "table";
+                document.getElementById("route-info").innerText = "Percorso trovato:";
+            } else {
+                document.getElementById("route-info").innerText = "Nessun percorso disponibile.";
+                document.getElementById("route-table").style.display = "none";
+            }
         }
     </script>
 </body>
